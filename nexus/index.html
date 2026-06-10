@@ -8,6 +8,20 @@
     <meta name="theme-color" content="#050511" />
     <meta name="description" content="Sistema de Gestão Jurídica Inteligente - Nexus" />
     <title>Nexus - Legal Suite</title>
+    <script>
+        // Clear any registered service workers from this origin to prevent cache-related white screens
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.getRegistrations().then(registrations => {
+                for (const registration of registrations) {
+                    registration.unregister().then(success => {
+                        if (success) console.log('Service Worker unregistered successfully.');
+                    });
+                }
+            }).catch(err => {
+                console.error('Error unregistering service worker:', err);
+            });
+        }
+    </script>
 </head>
 
 <body>
