@@ -4,12 +4,12 @@ import { getFirestore } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 
 const firebaseConfig = {
-    apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
-    authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
-    projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
-    storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
-    messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
-    appId: import.meta.env.VITE_FIREBASE_APP_ID,
+    apiKey: "AIzaSyCQ865fjOiTRGbogtvI6leNSBF-n2uCwx0",
+    authDomain: "pagamento-5b5c1.firebaseapp.com",
+    projectId: "pagamento-5b5c1",
+    storageBucket: "pagamento-5b5c1.firebasestorage.app",
+    messagingSenderId: "748472701350",
+    appId: "1:748472701350:web:2b8d65bb261bbd94f17f67"
 };
 
 const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
