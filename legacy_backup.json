@@ -1,0 +1,503 @@
+[
+  {
+    "_collection": "clients",
+    "id": "1jqQ9aBE8j3Hhlsavbh3",
+    "name": "Alfa Franchising EIRELI",
+    "code": "4919",
+    "createdAt": "2026-01-15T18:44:48.946Z"
+  },
+  {
+    "_collection": "clients",
+    "id": "4e1HkQQTALC0KUGelyem",
+    "name": "Adailton Silva Almeida",
+    "code": "2253",
+    "createdAt": "2026-01-15T16:29:29.340Z"
+  },
+  {
+    "_collection": "clients",
+    "id": "6IrCdFhfh82jMfW7Xqmh",
+    "name": "Guaporé Perícia e Vistoria Veicular LTDA",
+    "code": "6096",
+    "createdAt": "2026-01-19T18:02:28.814Z"
+  },
+  {
+    "_collection": "clients",
+    "id": "AAWptBHthGcDitOUx9PV",
+    "name": "Paulo",
+    "code": "5008",
+    "createdAt": "2026-01-09T19:29:34.193Z"
+  },
+  {
+    "_collection": "clients",
+    "id": "EIGuY1rWukEpIAjFjSyZ",
+    "name": "Boniek Bezerra Santos",
+    "code": "8100",
+    "createdAt": "2026-01-16T14:22:21.866Z"
+  },
+  {
+    "_collection": "clients",
+    "id": "NQQSj5YWbsCtcT1kQoSg",
+    "name": "P.H.B. MATERIAIS PARA CONSTRUÇÃO LTDA",
+    "code": "2900",
+    "createdAt": "2026-01-14T18:27:54.008Z"
+  },
+  {
+    "_collection": "clients",
+    "id": "OqJNNUqwdzdM9ktINJyo",
+    "name": "Luiza de Lima Evangelista",
+    "code": "6859",
+    "createdAt": "2026-01-20T13:51:52.300Z"
+  },
+  {
+    "_collection": "clients",
+    "id": "OqZpPWpSP2VUFf1jhUhc",
+    "name": "FTE Comércio e Seviços LTDA",
+    "code": "7976",
+    "createdAt": "2026-01-19T16:18:54.113Z"
+  },
+  {
+    "_collection": "clients",
+    "id": "UgTD37pSJUWV5raUkaul",
+    "name": "Vanilce Alves de Souza",
+    "code": "1204",
+    "createdAt": "2026-01-19T21:40:54.086Z"
+  },
+  {
+    "_collection": "clients",
+    "id": "bOW8NTRKNxLdvmoI9dXr",
+    "name": "Julia",
+    "code": "6714",
+    "createdAt": "2026-01-09T17:22:47.881Z"
+  },
+  {
+    "_collection": "clients",
+    "id": "ejiaVgQx7heClpXR4jkv",
+    "name": "Massalai Pericia E Vistoria Veicular Ltda",
+    "code": "1067",
+    "createdAt": "2026-01-21T20:29:49.440Z"
+  },
+  {
+    "_collection": "clients",
+    "id": "fBLV7Lwow2vk3HkRFHv0",
+    "name": "Juarla Mares Moreira",
+    "code": "4985",
+    "createdAt": "2026-01-16T02:25:03.654Z"
+  },
+  {
+    "_collection": "clients",
+    "id": "fF2HLx8ab9Tc2XTCXk6h",
+    "name": "Adriano Santos Delgado de Oliveira",
+    "code": "6424",
+    "createdAt": "2026-01-15T16:32:57.216Z"
+  },
+  {
+    "_collection": "clients",
+    "id": "gOfrgLD702D062TwPqaI",
+    "name": "Jorge Luiz Pullig Vilaça",
+    "code": "5848",
+    "createdAt": "2026-01-19T19:12:27.626Z"
+  },
+  {
+    "_collection": "clients",
+    "id": "gSXtshurqBFtGPjbQoL1",
+    "name": "Daniella Martins Locatelli de Sousa",
+    "code": "9080",
+    "createdAt": "2026-01-19T15:52:37.477Z"
+  },
+  {
+    "_collection": "clients",
+    "id": "gYPGK5wqqD2MnVUys8UI",
+    "name": "Angelita Lima Dantas",
+    "code": "6412",
+    "createdAt": "2026-01-15T22:13:49.703Z"
+  },
+  {
+    "_collection": "clients",
+    "id": "jqO1MFDl63uLbEyZBi5F",
+    "name": "Moema Medeiros Dias dos Santos",
+    "code": "3259",
+    "createdAt": "2026-01-20T16:33:53.282Z"
+  },
+  {
+    "_collection": "clients",
+    "id": "nP2ipopmMVZAFOHOLP4D",
+    "name": "Norte & Sul Serviços Terceirizados de Mão de Obra LTDA",
+    "code": "1226",
+    "createdAt": "2026-01-15T01:11:26.036Z"
+  },
+  {
+    "_collection": "clients",
+    "id": "ndg2ugI848uI2K9HVRz0",
+    "name": "Luis Marcelo Vieira",
+    "code": "2844",
+    "createdAt": "2026-01-20T01:40:39.703Z"
+  },
+  {
+    "_collection": "clients",
+    "id": "oqXHJaDsmFWBGK4Vzqof",
+    "name": "ONDA PRO IMPORTADORA DE MULTI VARIEDADES E SUPRIMENTOS LTDA",
+    "code": "9158",
+    "createdAt": "2026-01-14T20:20:56.314Z"
+  },
+  {
+    "_collection": "clients",
+    "id": "qKvtsMmqYyBHG0OYOtWb",
+    "name": "MELINA SODRÉ RIBEIRO",
+    "code": "1994",
+    "createdAt": "2026-01-20T14:14:24.600Z"
+  },
+  {
+    "_collection": "clients",
+    "id": "qOYi3cEcKPAGiMOgfj5Q",
+    "name": "Diego Pasquim Tolotti",
+    "code": "8395",
+    "createdAt": "2026-01-10T17:24:12.068Z"
+  },
+  {
+    "_collection": "clients",
+    "id": "tPTAHMb4jsV1lTHKwvk2",
+    "name": "Águia Vistorias e Serviços EIRELI",
+    "code": "7780",
+    "createdAt": "2026-01-15T17:24:48.900Z"
+  },
+  {
+    "_collection": "clients",
+    "id": "uCGJ5KZ6ykbeyFgUqF7Q",
+    "name": "Miguel Souza da Silva Junior",
+    "code": "2960",
+    "createdAt": "2026-01-20T14:20:54.654Z"
+  },
+  {
+    "_collection": "clients",
+    "id": "w0olvvgI94oA9fITNHTr",
+    "name": "Henrique Fonseca",
+    "code": "1665",
+    "createdAt": "2026-01-09T17:17:05.000Z"
+  },
+  {
+    "_collection": "clients",
+    "id": "xDhrSwKoOxkv4w5rgk7B",
+    "name": "Keyla Rodrigues Zara de Paula",
+    "code": "7772",
+    "createdAt": "2026-01-20T00:04:18.047Z"
+  },
+  {
+    "_collection": "contracts",
+    "id": "08Fuj5HsRBGo02sxCEJJ",
+    "fullCode": "1204-26.8890/03",
+    "contractNumber": "8890",
+    "year": "26",
+    "lawyerId": "03",
+    "clientId": "UgTD37pSJUWV5raUkaul",
+    "clientName": "Vanilce Alves de Souza",
+    "createdAt": "2026-01-19T21:40:54.575Z"
+  },
+  {
+    "_collection": "contracts",
+    "id": "18xgzxniOyrLXWpM3IKv",
+    "fullCode": "7780-26.3080/03",
+    "contractNumber": "3080",
+    "year": "26",
+    "lawyerId": "03",
+    "clientId": "tPTAHMb4jsV1lTHKwvk2",
+    "clientName": "Águia Vistorias e Serviços EIRELI",
+    "createdAt": "2026-01-15T17:24:49.290Z"
+  },
+  {
+    "_collection": "contracts",
+    "id": "2MZErhpK5IKcWCjcbGCP",
+    "fullCode": "3259-26.7732/04",
+    "contractNumber": "7732",
+    "year": "26",
+    "lawyerId": "04",
+    "clientId": "jqO1MFDl63uLbEyZBi5F",
+    "clientName": "Moema Medeiros Dias dos Santos",
+    "createdAt": "2026-01-20T16:33:53.730Z"
+  },
+  {
+    "_collection": "contracts",
+    "id": "5DMOV88eoIA8VAZB3ZxM",
+    "fullCode": "8100-26.4684/02",
+    "contractNumber": "4684",
+    "year": "26",
+    "lawyerId": "02",
+    "clientId": "EIGuY1rWukEpIAjFjSyZ",
+    "clientName": "Boniek Bezerra Santos",
+    "createdAt": "2026-01-16T14:22:22.274Z"
+  },
+  {
+    "_collection": "contracts",
+    "id": "8iSlYIX8vjE5dpfb8EzY",
+    "fullCode": "8395-26.3769/02",
+    "contractNumber": "3769",
+    "year": "26",
+    "lawyerId": "02",
+    "clientId": "qOYi3cEcKPAGiMOgfj5Q",
+    "clientName": "Diego Pasquim Tolotti",
+    "createdAt": "2026-01-10T17:24:12.278Z"
+  },
+  {
+    "_collection": "contracts",
+    "id": "9ugLsEQ9UsyJvVMFz6H4",
+    "fullCode": "5848-26.6114/08",
+    "contractNumber": "6114",
+    "year": "26",
+    "lawyerId": "08",
+    "clientId": "gOfrgLD702D062TwPqaI",
+    "clientName": "Jorge Luiz Pullig Vilaça",
+    "createdAt": "2026-01-19T19:12:28.034Z"
+  },
+  {
+    "_collection": "contracts",
+    "id": "ABgf2cGpKs56ngbcFB1w",
+    "fullCode": "1226-26.6990/07",
+    "contractNumber": "6990",
+    "year": "26",
+    "lawyerId": "07",
+    "clientId": "nP2ipopmMVZAFOHOLP4D",
+    "clientName": "Norte & Sul Serviços Terceirizados de Mão de Obra LTDA",
+    "createdAt": "2026-01-16T02:59:23.212Z"
+  },
+  {
+    "_collection": "contracts",
+    "id": "HDwyEjmrG37j0WE0fyYv",
+    "fullCode": "1067-26.4884/07",
+    "contractNumber": "4884",
+    "year": "26",
+    "lawyerId": "07",
+    "clientId": "ejiaVgQx7heClpXR4jkv",
+    "clientName": "Massalai Pericia E Vistoria Veicular Ltda",
+    "createdAt": "2026-01-21T20:29:49.820Z"
+  },
+  {
+    "_collection": "contracts",
+    "id": "HJgCgjlxX2wv6NHNqGmt",
+    "fullCode": "7780-26.5000/02",
+    "contractNumber": "5000",
+    "year": "26",
+    "lawyerId": "02",
+    "clientId": "tPTAHMb4jsV1lTHKwvk2",
+    "clientName": "Águia Vistorias e Serviços EIRELI",
+    "createdAt": "2026-01-15T18:42:38.334Z"
+  },
+  {
+    "_collection": "contracts",
+    "id": "JkxyDWloO9UQa36liesr",
+    "fullCode": "6412-26.3601/03",
+    "contractNumber": "3601",
+    "year": "26",
+    "lawyerId": "03",
+    "clientId": "gYPGK5wqqD2MnVUys8UI",
+    "clientName": "Angelita Lima Dantas",
+    "createdAt": "2026-01-15T22:13:50.155Z"
+  },
+  {
+    "_collection": "contracts",
+    "id": "KDcMUJyrojQBXs7EzyRU",
+    "fullCode": "2960-26.5375/04",
+    "contractNumber": "5375",
+    "year": "26",
+    "lawyerId": "04",
+    "clientId": "uCGJ5KZ6ykbeyFgUqF7Q",
+    "clientName": "Miguel Souza da Silva Junior",
+    "createdAt": "2026-01-20T14:20:55.106Z"
+  },
+  {
+    "_collection": "contracts",
+    "id": "RI5dcskyDsP0y0jzjbJf",
+    "fullCode": "4985-26.4847/07",
+    "contractNumber": "4847",
+    "year": "26",
+    "lawyerId": "07",
+    "clientId": "fBLV7Lwow2vk3HkRFHv0",
+    "clientName": "Juarla Mares Moreira",
+    "createdAt": "2026-01-16T02:25:04.038Z"
+  },
+  {
+    "_collection": "contracts",
+    "id": "SPSXq9H3cLblGToSb4Po",
+    "fullCode": "2960-26.2697/03",
+    "contractNumber": "2697",
+    "year": "26",
+    "lawyerId": "03",
+    "clientId": "uCGJ5KZ6ykbeyFgUqF7Q",
+    "clientName": "Miguel Souza da Silva Junior",
+    "createdAt": "2026-01-20T15:39:36.364Z"
+  },
+  {
+    "_collection": "contracts",
+    "id": "SmwcM0DA019LMc4LjN3z",
+    "fullCode": "1204-26.8465/03",
+    "contractNumber": "8465",
+    "year": "26",
+    "lawyerId": "03",
+    "clientId": "UgTD37pSJUWV5raUkaul",
+    "clientName": "Vanilce Alves de Souza",
+    "createdAt": "2026-01-19T21:42:49.100Z"
+  },
+  {
+    "_collection": "contracts",
+    "id": "TEeV64RkWK833TwQPhMW",
+    "fullCode": "2253-26.4410/06",
+    "contractNumber": "4410",
+    "year": "26",
+    "lawyerId": "06",
+    "clientId": "4e1HkQQTALC0KUGelyem",
+    "clientName": "Adailton Silva Almeida",
+    "createdAt": "2026-01-15T16:29:29.751Z"
+  },
+  {
+    "_collection": "contracts",
+    "id": "Uj0uklwPsAdkvhlLjxFA",
+    "fullCode": "2844-26.6671/02",
+    "contractNumber": "6671",
+    "year": "26",
+    "lawyerId": "02",
+    "clientId": "ndg2ugI848uI2K9HVRz0",
+    "clientName": "Luis Marcelo Vieira",
+    "createdAt": "2026-01-20T01:40:40.142Z"
+  },
+  {
+    "_collection": "contracts",
+    "id": "Uk3kn1ESL6ToMTG1meVx",
+    "fullCode": "4919-26.5568/02",
+    "contractNumber": "5568",
+    "year": "26",
+    "lawyerId": "02",
+    "clientId": "1jqQ9aBE8j3Hhlsavbh3",
+    "clientName": "Alfa Franchising EIRELI",
+    "createdAt": "2026-01-15T18:44:49.383Z"
+  },
+  {
+    "_collection": "contracts",
+    "id": "aBnPUGOGc8hcx7aNK5mK",
+    "fullCode": "9158-26.8532/06",
+    "contractNumber": "8532",
+    "year": "26",
+    "lawyerId": "06",
+    "clientId": "oqXHJaDsmFWBGK4Vzqof",
+    "clientName": "ONDA PRO IMPORTADORA DE MULTI VARIEDADES E SUPRIMENTOS LTDA",
+    "createdAt": "2026-01-14T20:20:56.764Z"
+  },
+  {
+    "_collection": "contracts",
+    "id": "aTf38HrmVtLKMFKHUq4P",
+    "fullCode": "1226-26.9369/04",
+    "contractNumber": "9369",
+    "year": "26",
+    "lawyerId": "04",
+    "clientId": "nP2ipopmMVZAFOHOLP4D",
+    "clientName": "Norte & Sul Serviços Terceirizados de Mão de Obra LTDA",
+    "createdAt": "2026-01-15T01:11:26.452Z"
+  },
+  {
+    "_collection": "contracts",
+    "id": "eC41caS1GWv4nYgB72BC",
+    "fullCode": "9080-26.6950/03",
+    "contractNumber": "6950",
+    "year": "26",
+    "lawyerId": "03",
+    "clientId": "gSXtshurqBFtGPjbQoL1",
+    "clientName": "Daniella Martins Locatelli de Sousa",
+    "createdAt": "2026-01-19T15:52:38.002Z"
+  },
+  {
+    "_collection": "contracts",
+    "id": "f4kBylQwJAGY8aqJ7ZdM",
+    "fullCode": "5008-26.8742/01",
+    "contractNumber": "8742",
+    "year": "26",
+    "lawyerId": "01",
+    "clientId": "AAWptBHthGcDitOUx9PV",
+    "clientName": "Paulo",
+    "createdAt": "2026-01-09T19:29:34.294Z"
+  },
+  {
+    "_collection": "contracts",
+    "id": "g1CtUOvlnEoHUC0p7xtK",
+    "fullCode": "2900-26.6062/06",
+    "contractNumber": "6062",
+    "year": "26",
+    "lawyerId": "06",
+    "clientId": "NQQSj5YWbsCtcT1kQoSg",
+    "clientName": "P.H.B. MATERIAIS PARA CONSTRUÇÃO LTDA",
+    "createdAt": "2026-01-14T18:27:54.571Z"
+  },
+  {
+    "_collection": "contracts",
+    "id": "hr2GhJpg4zasnQihKQTa",
+    "fullCode": "7772-26.7571/03",
+    "contractNumber": "7571",
+    "year": "26",
+    "lawyerId": "03",
+    "clientId": "xDhrSwKoOxkv4w5rgk7B",
+    "clientName": "Keyla Rodrigues Zara de Paula",
+    "createdAt": "2026-01-20T00:04:18.469Z"
+  },
+  {
+    "_collection": "contracts",
+    "id": "j5CHNwIIedWofAWZG53I",
+    "fullCode": "6096-26.9070/03",
+    "contractNumber": "9070",
+    "year": "26",
+    "lawyerId": "03",
+    "clientId": "6IrCdFhfh82jMfW7Xqmh",
+    "clientName": "Guaporé Perícia e Vistoria Veicular LTDA",
+    "createdAt": "2026-01-19T18:02:29.205Z"
+  },
+  {
+    "_collection": "contracts",
+    "id": "jeDD509dMGMnu5l5urQz",
+    "fullCode": "4919-26.3749/02",
+    "contractNumber": "3749",
+    "year": "26",
+    "lawyerId": "02",
+    "clientId": "1jqQ9aBE8j3Hhlsavbh3",
+    "clientName": "Alfa Franchising EIRELI",
+    "createdAt": "2026-01-15T18:51:50.269Z"
+  },
+  {
+    "_collection": "contracts",
+    "id": "nCoBHtzvoIy5J5bJlXl3",
+    "fullCode": "1994-26.6635/02",
+    "contractNumber": "6635",
+    "year": "26",
+    "lawyerId": "02",
+    "clientId": "qKvtsMmqYyBHG0OYOtWb",
+    "clientName": "MELINA SODRÉ RIBEIRO",
+    "createdAt": "2026-01-20T14:14:25.031Z"
+  },
+  {
+    "_collection": "contracts",
+    "id": "nMKU24iB0pcOyCxHRGVK",
+    "fullCode": "6424-26.7308/02",
+    "contractNumber": "7308",
+    "year": "26",
+    "lawyerId": "02",
+    "clientId": "fF2HLx8ab9Tc2XTCXk6h",
+    "clientName": "Adriano Santos Delgado de Oliveira",
+    "createdAt": "2026-01-15T16:32:57.621Z"
+  },
+  {
+    "_collection": "contracts",
+    "id": "tAKb86fYniIZO8HbBIVb",
+    "fullCode": "7976-26.3609/06",
+    "contractNumber": "3609",
+    "year": "26",
+    "lawyerId": "06",
+    "clientId": "OqZpPWpSP2VUFf1jhUhc",
+    "clientName": "FTE Comércio e Seviços LTDA",
+    "createdAt": "2026-01-19T16:18:54.629Z"
+  },
+  {
+    "_collection": "contracts",
+    "id": "wJhZLCQHbc5FsTKzvP3j",
+    "fullCode": "6859-26.8769/04",
+    "contractNumber": "8769",
+    "year": "26",
+    "lawyerId": "04",
+    "clientId": "OqJNNUqwdzdM9ktINJyo",
+    "clientName": "Luiza de Lima Evangelista",
+    "createdAt": "2026-01-20T13:51:52.732Z"
+  }
+]

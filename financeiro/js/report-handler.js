@@ -1,0 +1,319 @@
+import { Utils } from './utils.js';
+
+export class ReportHandler {
+	constructor(appInstance) {
+		this.app = appInstance;
+	}
+
+	// [INÍCIO DA ALTERAÇÃO - ADVOGADO VÊ FINANCEIRO]
+	// Removida a verificação 'isUserAdmin', pois os 'contractsToRender'
+	// já vêm pré-filtrados pela classe App.
+	calculateIncomeByDateRange(startDate, endDate, contractsToRender) {
+		let totalParcelas = 0, totalExito = 0, totalVencido = 0, totalReembolsos = 0;
+		let totalCustasEscritorio = 0, totalCustasCliente = 0, totalCustasSocio = 0;
+		const detailedPayments = [];
+		const diligenciasPorContrato = [];
+		const byAdvogado = {};
+		const byMonth = {};
+		const vencidoByMonth = {};
+		const newContractsByMonth = {};
+
+		// Filtra contratos excluídos
+		const allContracts = contractsToRender.filter(c => !c.isDeleted);
+
+		const addData = (map, date, value) => {
+			const monthKey = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
+			map[monthKey] = (map[monthKey] || 0) + value;
+		};
+
+		allContracts.forEach(contract => {
+			const advogado = contract.advogadoResponsavel || 'Não Informado';
+
+			// 1. Novos Contratos
+			if (contract.createdAt) {
+				const d = new Date(contract.createdAt);
+				if (d >= startDate && d <= endDate) addData(newContractsByMonth, d, 1);
+			}
+
+			// 2. Parcelas
+			const custasEscritorioContrato = [];
+			const custasClienteContrato = [];
+			const custasSocioContrato = [];
+
+			(contract.parcels || []).forEach(parcel => {
+				// === DILIGÊNCIAS: rastrear por quem pagou ===
+				if (parcel.isDiligencia) {
+					const pagador = parcel.paidBy || 'Escritório';
+					const dDue = new Date(parcel.dueDate);
+					
+					const entry = {
+						descricao: parcel.description || 'Diligência',
+						valor: parcel.value,
+						data: dDue,
+						pagador,
+						isReimbursed: parcel.isReimbursed || false
+					};
+
+					// 1. Custo para o Escritório (na data que foi pago/vencimento)
+					const isPaidByOffice = pagador && (pagador.toString().toLowerCase().includes('escritorio') || pagador.toString().toLowerCase().includes('escritório'));
+					const isPaidBySocio = pagador && (pagador.toString().toLowerCase().includes('socio') || pagador.toString().toLowerCase().includes('sócio'));
+					
+					if (isPaidByOffice) {
+						if (dDue >= startDate && dDue <= endDate) {
+							totalCustasEscritorio += parcel.value;
+							custasEscritorioContrato.push(entry);
+						}
+						
+						// 2. Reembolso (na data que o cliente pagou de volta)
+						if (parcel.isReimbursed && parcel.reimbursementDate) {
+							const dReim = new Date(parcel.reimbursementDate);
+							if (dReim >= startDate && dReim <= endDate) {
+								// Reembolso entra como uma Receita/Subtração de custo
+								detailedPayments.push({ 
+									type: 'Reembolso Diligência', 
+									clientName: contract.clientName, 
+									date: dReim, 
+									value: parcel.value, 
+									advogado: advogado 
+								});
+								totalReembolsos += parcel.value;
+								totalExito += parcel.value; // Agrupa em receitas para o cálculo do totalGeral
+								addData(byMonth, dReim, parcel.value);
+							}
+						}
+					} else if (isPaidBySocio) {
+						if (dDue >= startDate && dDue <= endDate) {
+							totalCustasSocio += parcel.value;
+							custasSocioContrato.push(entry);
+						}
+						
+						// Reembolso (na data que o cliente pagou de volta)
+						if (parcel.isReimbursed && parcel.reimbursementDate) {
+							const dReim = new Date(parcel.reimbursementDate);
+							if (dReim >= startDate && dReim <= endDate) {
+								detailedPayments.push({ 
+									type: 'Reembolso Diligência (Sócio)', 
+									clientName: contract.clientName, 
+									date: dReim, 
+									value: parcel.value, 
+									advogado: advogado 
+								});
+								totalReembolsos += parcel.value;
+								totalExito += parcel.value;
+								addData(byMonth, dReim, parcel.value);
+							}
+						}
+					} else {
+						// Pago pelo cliente direto
+						if (dDue >= startDate && dDue <= endDate) {
+							totalCustasCliente += parcel.value;
+							custasClienteContrato.push(entry);
+						}
+					}
+					return;
+				}
+
+				// === RECEBIDO ===
+				if (parcel.status === 'Paga' && parcel.paymentDate) {
+					const d = new Date(parcel.paymentDate);
+					if (d >= startDate && d <= endDate) {
+						const value = parcel.valuePaid;
+						if (parcel.isExito) {
+							totalExito += value;
+							detailedPayments.push({ type: `Taxa de Êxito (Parc. ${parcel.number})`, clientName: contract.clientName, date: d, value: value, advogado: advogado });
+						} else {
+							totalParcelas += value;
+							detailedPayments.push({ type: `Parcela ${parcel.number}/${contract.parcels.filter(p => !p.isDiligencia && !p.isExito).length}`, clientName: contract.clientName, date: d, value: value, advogado: advogado });
+						}
+						byAdvogado[advogado] = (byAdvogado[advogado] || 0) + value;
+						addData(byMonth, d, value);
+					}
+				}
+				// === INADIMPLÊNCIA ===
+				else if (parcel.status === 'Pendente') {
+					const d = new Date(parcel.dueDate);
+					if (d >= startDate && d <= endDate && d < new Date()) {
+						const valorAtualizado = this.app.correctionCalculator.calcularValorCorrigido(parcel.value, parcel.dueDate);
+						totalVencido += valorAtualizado;
+						addData(vencidoByMonth, d, valorAtualizado);
+					}
+				}
+			});
+
+			if (custasEscritorioContrato.length > 0 || custasClienteContrato.length > 0 || custasSocioContrato.length > 0) {
+				diligenciasPorContrato.push({
+					clientName: contract.clientName,
+					advogado,
+					custasEscritorio: custasEscritorioContrato,
+					custasCliente: custasClienteContrato,
+					custasSocio: custasSocioContrato
+				});
+			}
+
+			// 3. Êxito
+			if (contract.successFeePaymentDate) {
+				const d = new Date(contract.successFeePaymentDate);
+				if (d >= startDate && d <= endDate) {
+					const value = contract.successFeeValueReceived;
+					totalExito += value;
+					detailedPayments.push({ type: 'Taxa de Êxito', clientName: contract.clientName, date: d, value: value, advogado: advogado });
+					byAdvogado[advogado] = (byAdvogado[advogado] || 0) + value;
+					addData(byMonth, d, value);
+				}
+			}
+		});
+
+		let totalReceitasAvulsas = 0;
+		let totalDespesas = 0;
+
+		if (this.app.isUserAdmin) {
+			// Receitas Avulsas
+			const extraRevenues = (this.app.database.extraRevenues || []).filter(r => !r.isDeleted);
+			extraRevenues.forEach(rev => {
+				const d = new Date(rev.date + 'T12:00:00Z');
+				if (d >= startDate && d <= endDate) {
+					totalReceitasAvulsas += rev.value;
+					detailedPayments.push({ type: 'Receita Avulsa', clientName: rev.origin, date: d, value: rev.value, advogado: '-' });
+					addData(byMonth, d, rev.value);
+				}
+			});
+
+			// Despesas do Escritório
+			const officeExpenses = (this.app.database.officeExpenses || []).filter(e => !e.isDeleted);
+			officeExpenses.forEach(exp => {
+				if (exp.status === 'Paga' && exp.paymentDate) {
+					const d = new Date(exp.paymentDate + 'T12:00:00Z');
+					if (d >= startDate && d <= endDate) {
+						totalDespesas += exp.value;
+						detailedPayments.push({ type: 'Despesa Escritório', clientName: exp.description, date: d, value: -exp.value, advogado: '-' });
+					}
+				}
+			});
+		}
+
+		const totalGeral = totalParcelas + totalExito + totalReceitasAvulsas;
+		const saldoLiquido = totalGeral - totalDespesas - totalCustasEscritorio;
+		const totalContratos = Object.values(newContractsByMonth).reduce((a, b) => a + b, 0);
+
+		return {
+			totalParcelas,
+			totalExito,
+			totalGeral,
+			totalContratos,
+			totalVencido,
+			totalReembolsos,
+			detailedPayments,
+			byAdvogado,
+			byMonth,
+			vencidoByMonth,
+			newContractsByMonth,
+			totalDespesas,
+			totalReceitasAvulsas,
+			saldoLiquido,
+			totalCustasEscritorio,
+			totalCustasCliente,
+			totalCustasSocio,
+			diligenciasPorContrato
+		};
+	}
+
+	getDefaultersInMonth(month, year, contracts) {
+		const defaulters = [];
+		const startMonth = new Date(year, month, 1);
+		const endMonth = new Date(year, month + 1, 0, 23, 59, 59);
+
+		contracts.forEach(c => {
+			if (!c.parcels) return;
+			c.parcels.forEach(p => {
+				if (p.isDiligencia) return; // Diligências não são inadimplência
+				const dueDate = new Date(p.dueDate);
+				const hoje = new Date();
+				if (dueDate >= startMonth && dueDate <= endMonth && p.status === 'Pendente' && dueDate < hoje) {
+					defaulters.push({
+						client: c.clientName,
+						advogado: c.advogadoResponsavel,
+						dueDate: dueDate,
+						value: p.value,
+						parcelNum: `${p.number}/${c.parcels.length}`
+					});
+				}
+			});
+		});
+		return defaulters;
+	}
+
+	// [NOVO v5.5] Agrega dados para o Painel de Admin
+	calculateAdminPerformanceData(contractsToRender) {
+		const hoje = new Date();
+		const inicioAno = new Date(hoje.getFullYear(), 0, 1);
+		const fimAno = new Date(hoje.getFullYear(), 11, 31, 23, 59, 59);
+
+		const contratosAtivos = contractsToRender.filter(c => !c.isDeleted && this.app.getContractStatus(c).statusText !== 'Concluído');
+		const faturamentoAno = this.calculateIncomeByDateRange(inicioAno, fimAno, contractsToRender);
+
+		const contratosPorAdvogado = {};
+		contratosAtivos.forEach(contract => {
+			const advogado = contract.advogadoResponsavel || 'Não Informado';
+			contratosPorAdvogado[advogado] = (contratosPorAdvogado[advogado] || 0) + 1;
+		});
+
+		const faturamentoPorAdvogado = faturamentoAno.byAdvogado;
+
+		return { contratosPorAdvogado, faturamentoPorAdvogado };
+	}
+
+	// Função legada (ainda usada pelo modal antigo)
+	calculateMonthlyIncome(year, month, contractsToRender) {
+		const startDate = new Date(year, month, 1);
+		const endDate = new Date(year, month + 1, 0, 23, 59, 59);
+		const data = this.calculateIncomeByDateRange(startDate, endDate, contractsToRender);
+		return {
+			totalParcelas: data.totalParcelas,
+			totalExito: data.totalExito,
+			totalGeral: data.totalGeral,
+			saldoLiquido: data.saldoLiquido,
+			totalDespesas: data.totalDespesas,
+			detailedPayments: data.detailedPayments
+		};
+	}
+
+	getActualIncomeData(contractsToRender) {
+		const labels = [];
+		const data = [];
+		const hoje = new Date();
+
+		for (let i = 11; i >= 0; i--) {
+			const date = new Date(hoje.getFullYear(), hoje.getMonth() - i, 1);
+			labels.push(date.toLocaleString('pt-BR', { month: 'short', year: '2-digit' }));
+			const income = this.calculateMonthlyIncome(date.getFullYear(), date.getMonth(), contractsToRender);
+			data.push(income.totalGeral);
+		}
+		return { labels, data };
+	}
+
+	getProjectedIncomeData(contractsToRender) {
+		const labels = [];
+		const data = new Array(12).fill(0);
+		const hoje = new Date(); hoje.setHours(0, 0, 0, 0);
+		const inicioMesAtual = new Date(hoje.getFullYear(), hoje.getMonth(), 1);
+
+		for (let i = 0; i < 12; i++) {
+			const date = new Date(hoje.getFullYear(), hoje.getMonth() + i, 1);
+			labels.push(date.toLocaleString('pt-BR', { month: 'short', year: '2-digit' }));
+		}
+
+		const filteredContracts = contractsToRender.filter(c => !c.isDeleted);
+		for (const contract of filteredContracts) {
+			if (!contract.parcels) continue;
+			for (const parcel of contract.parcels) {
+				if (parcel.status === 'Pendente') {
+					const dueDate = new Date(parcel.dueDate);
+					if (dueDate < inicioMesAtual) continue;
+					const diffMonth = (dueDate.getFullYear() - inicioMesAtual.getFullYear()) * 12 + (dueDate.getMonth() - inicioMesAtual.getMonth());
+					if (diffMonth >= 0 && diffMonth < 12) data[diffMonth] += parcel.value;
+				}
+			}
+		}
+		return { labels, data };
+	}
+}

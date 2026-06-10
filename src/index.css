@@ -1,0 +1,18 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body,
+#root {
+    background-color: #0f172a;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+@layer components {
+    .btn-liquid {
+        @apply relative overflow-hidden px-8 py-3 rounded-xl bg-slate-900 border border-blue-500/30 text-blue-300 font-mono font-bold tracking-wider transition-all duration-300 hover:border-pink-500 hover:text-pink-300 hover:shadow-[0_0_20px_rgba(236, 72, 153, 0.3)];
+    }
+}

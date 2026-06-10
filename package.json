@@ -1,0 +1,38 @@
+{
+    "name": "legal-suite-web",
+    "private": true,
+    "version": "0.0.0",
+    "type": "module",
+    "scripts": {
+        "dev": "vite",
+        "server": "node server.cjs",
+        "dev:all": "node run-dev.cjs",
+        "build": "vite build",
+        "lint": "eslint .",
+        "preview": "vite preview",
+        "predeploy": "npm run build",
+        "deploy": "gh-pages -d dist"
+    },
+    "dependencies": {
+        "@types/file-saver": "^2.0.7",
+        "file-saver": "^2.0.5",
+        "firebase": "^10.0.0",
+        "firebase-admin": "^13.6.0",
+        "framer-motion": "^10.15.0",
+        "jszip": "^3.10.1",
+        "lucide-react": "^0.279.0",
+        "react": "^18.2.0",
+        "react-dom": "^18.2.0"
+    },
+    "devDependencies": {
+        "@types/react": "^18.2.15",
+        "@types/react-dom": "^18.2.7",
+        "@vitejs/plugin-react": "^4.0.3",
+        "autoprefixer": "^10.4.15",
+        "gh-pages": "^6.1.1",
+        "postcss": "^8.4.29",
+        "tailwindcss": "^3.3.3",
+        "typescript": "^5.0.2",
+        "vite": "^4.4.5"
+    }
+}
