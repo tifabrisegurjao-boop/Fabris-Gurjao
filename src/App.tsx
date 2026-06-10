@@ -15,7 +15,7 @@ type Page = 'dashboard' | 'folder' | 'code' | 'history' | 'import' | 'organizer'
 
 function App() {
     const [page, setPage] = useState<Page>('dashboard');
-    const [showSplash, setShowSplash] = useState(true);
+    const [showSplash, setShowSplash] = useState(false);
     const [user, setUser] = useState<User | null>(null);
     const [authLoading, setAuthLoading] = useState(true);
 

@@ -287,6 +287,65 @@
             color: #ffffff;
             text-decoration: underline;
         }
+
+        /* Transition Video Overlay */
+        .video-overlay {
+            position: fixed;
+            inset: 0;
+            background-color: #050511;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .video-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .video-overlay video {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        /* Fallback loader when video doesn't load or plays slowly */
+        .transition-fallback {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            animation: pulse-slow 2s infinite ease-in-out;
+        }
+        
+        .transition-loader {
+            width: 50px;
+            height: 50px;
+            border: 3px solid rgba(245, 158, 11, 0.1);
+            border-top: 3px solid var(--gold-light);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        @keyframes pulse-slow {
+            0%, 100% { opacity: 0.6; }
+            50% { opacity: 1; }
+        }
     </style>
 </head>
 
@@ -394,6 +453,62 @@
     <footer>
         <p>&copy; 2026 Fabris & Gurjão Advogados Associados. Todos os direitos reservados.</p>
     </footer>
+
+    <!-- Video Transition Overlay -->
+    <div id="video-transition-overlay" class="video-overlay">
+        <video id="transition-video" src="./intro.mp4" muted playsinline></video>
+        <div id="video-fallback" class="transition-fallback" style="display: none;">
+            <div class="transition-loader"></div>
+            <p style="font-family: 'Inter', sans-serif; font-size: 0.75rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold-light); font-weight: 600;">Carregando Nexus...</p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const cards = document.querySelectorAll('a.system-card');
+            const overlay = document.getElementById('video-transition-overlay');
+            const video = document.getElementById('transition-video');
+            const fallback = document.getElementById('video-fallback');
+
+            // Force load video assets
+            video.load();
+
+            cards.forEach(card => {
+                const href = card.getAttribute('href');
+                if (href && href.includes('nexus')) {
+                    card.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        overlay.classList.add('active');
+                        
+                        // Show fallback spinner if video takes too long to load
+                        const fallbackTimeout = setTimeout(() => {
+                            fallback.style.display = 'flex';
+                        }, 1000);
+
+                        // Safe redirect timeout in case the video gets stuck or crashes
+                        const maxTimeout = setTimeout(() => {
+                            window.location.href = href;
+                        }, 5500);
+
+                        video.play()
+                            .then(() => {
+                                video.onended = () => {
+                                    clearTimeout(fallbackTimeout);
+                                    clearTimeout(maxTimeout);
+                                    window.location.href = href;
+                                };
+                            })
+                            .catch(err => {
+                                console.warn("Video play failed, redirecting directly:", err);
+                                clearTimeout(fallbackTimeout);
+                                clearTimeout(maxTimeout);
+                                window.location.href = href;
+                            });
+                    });
+                }
+            });
+        });
+    </script>
 </body>
 
 </html>
