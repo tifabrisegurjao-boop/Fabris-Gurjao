@@ -20,17 +20,17 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-dark-1: #030712;
-            --bg-dark-2: #0b1329;
-            --bg-dark-3: #080b11;
-            --gold-light: #f59e0b;
-            --gold-dark: #b45309;
-            --gold-glow: rgba(245, 158, 11, 0.15);
+            --bg-dark-1: #050b14;
+            --bg-dark-2: #0a1c3a; /* Exact Brand Navy */
+            --bg-dark-3: #030710;
+            --gold-light: #c5a059; /* Exact Brand Gold */
+            --gold-dark: #8e6f3b; /* Brand Dark Gold/Bronze */
+            --gold-glow: rgba(197, 160, 89, 0.15);
             --text-light: #f9fafb;
             --text-muted: #9ca3af;
-            --glass-bg: rgba(17, 24, 39, 0.55);
-            --glass-border: rgba(245, 158, 11, 0.12);
-            --glass-border-hover: rgba(245, 158, 11, 0.35);
+            --glass-bg: rgba(10, 28, 58, 0.55); /* Glass Brand Navy */
+            --glass-border: rgba(197, 160, 89, 0.15);
+            --glass-border-hover: rgba(197, 160, 89, 0.4);
         }
 
         * {
@@ -90,49 +90,36 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Header / Crest Section */
+        /* Header / Logo Section */
         .header-section {
-            margin-bottom: 56px;
+            margin-bottom: 48px;
         }
 
-        .crest-wrapper {
-            margin-bottom: 24px;
+        .logo-wrapper {
+            margin-bottom: 32px;
             position: relative;
             display: inline-block;
-            transition: transform 0.4s ease;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 24px;
+            padding: 20px 32px;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease, border-color 0.4s ease;
         }
 
-        .crest-wrapper:hover {
-            transform: scale(1.03);
+        .logo-wrapper:hover {
+            transform: translateY(-4px) scale(1.02);
+            border-color: rgba(197, 160, 89, 0.3);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5), 0 0 25px rgba(197, 160, 89, 0.15);
         }
 
-        .crest-svg {
-            width: 160px;
-            height: 160px;
-            filter: drop-shadow(0 0 15px rgba(245, 158, 11, 0.35));
-        }
-
-        .firm-title {
-            font-family: 'Playfair Display', serif;
-            font-size: 2.8rem;
-            font-weight: 700;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-            background: linear-gradient(to right, #ffffff, #ffe4b5, #ffffff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 8px;
-            text-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
-        }
-
-        .firm-subtitle {
-            font-size: 0.85rem;
-            letter-spacing: 0.45em;
-            text-transform: uppercase;
-            color: var(--gold-light);
-            font-weight: 600;
-            margin-bottom: 16px;
-            padding-left: 0.45em; /* Compensate for letter spacing */
+        .firm-logo {
+            height: 120px;
+            width: auto;
+            filter: brightness(1.25) contrast(1.1) drop-shadow(0 4px 8px rgba(0, 0, 0, 0.5));
+            display: block;
         }
 
         .divider {
@@ -363,56 +350,9 @@
     <div class="portal-container">
         <!-- Logo/Header -->
         <header class="header-section">
-            <div class="crest-wrapper">
-                <!-- Inline Premium SVG Crest -->
-                <svg class="crest-svg" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <!-- Outer Shield/Ornaments -->
-                    <circle cx="100" cy="100" r="88" stroke="url(#gold-gradient)" stroke-width="1.5" stroke-dasharray="10 4" />
-                    <circle cx="100" cy="100" r="80" stroke="url(#gold-gradient)" stroke-width="3" />
-                    
-                    <!-- Decorative laurel wreath - left -->
-                    <path d="M50 130 C42 110 44 80 62 60 C64 58 66 60 64 62 C50 78 48 105 55 125 Z" fill="url(#gold-gradient)" opacity="0.6" />
-                    <path d="M46 115 C40 100 42 85 52 72 L55 75 C47 86 45 98 50 112 Z" fill="url(#gold-gradient)" opacity="0.6" />
-                    <!-- Decorative laurel wreath - right -->
-                    <path d="M150 130 C158 110 156 80 138 60 C136 58 134 60 136 62 C150 78 152 105 145 125 Z" fill="url(#gold-gradient)" opacity="0.6" />
-                    <path d="M154 115 C160 100 158 85 148 72 L145 75 C153 86 155 98 150 112 Z" fill="url(#gold-gradient)" opacity="0.6" />
-
-                    <!-- Shield in center -->
-                    <path d="M100 45 C118 45 130 52 130 68 C130 110 106 142 100 150 C94 142 70 110 70 68 C70 52 82 45 100 45 Z" fill="#080e1a" stroke="url(#gold-gradient)" stroke-width="2.5" />
-                    
-                    <!-- Scales of Justice inside shield -->
-                    <!-- Central pillar -->
-                    <rect x="98" y="70" width="4" height="60" rx="1" fill="url(#gold-gradient)" />
-                    <!-- Pedestal -->
-                    <path d="M90 130 L110 130 L106 126 L94 126 Z" fill="url(#gold-gradient)" />
-                    <!-- Crossbeam -->
-                    <path d="M78 80 L122 80 L120 83 L80 83 Z" fill="url(#gold-gradient)" />
-                    <!-- Left scale pan and cords -->
-                    <line x1="80" y1="83" x2="72" y2="105" stroke="url(#gold-gradient)" stroke-width="0.75" />
-                    <line x1="80" y1="83" x2="88" y2="105" stroke="url(#gold-gradient)" stroke-width="0.75" />
-                    <path d="M70 105 C70 105 70 112 80 112 C90 112 90 105 90 105 Z" fill="url(#gold-gradient)" />
-                    <!-- Right scale pan and cords -->
-                    <line x1="120" y1="83" x2="112" y2="105" stroke="url(#gold-gradient)" stroke-width="0.75" />
-                    <line x1="120" y1="83" x2="128" y2="105" stroke="url(#gold-gradient)" stroke-width="0.75" />
-                    <path d="M110 105 C110 105 110 112 120 112 C130 112 130 105 130 105 Z" fill="url(#gold-gradient)" />
-
-                    <!-- Small Sword/Dagger at the top of the shield -->
-                    <path d="M97 50 L103 50 L100 64 Z" fill="url(#gold-gradient)" />
-                    <line x1="94" y1="62" x2="106" y2="62" stroke="url(#gold-gradient)" stroke-width="1.5" />
-
-                    <!-- Gradients -->
-                    <defs>
-                        <linearGradient id="gold-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" stop-color="#f59e0b" />
-                            <stop offset="30%" stop-color="#fbbf24" />
-                            <stop offset="70%" stop-color="#b45309" />
-                            <stop offset="100%" stop-color="#d97706" />
-                        </linearGradient>
-                    </defs>
-                </svg>
+            <div class="logo-wrapper">
+                <img src="https://www.fabrisegurjao.adv.br/netpage/data/uploads/2019/12/logo-fabris-e-gurjao-491x325px.png" alt="Logo Fabris & Gurjão" class="firm-logo" />
             </div>
-            <h1 class="firm-title">Fabris & Gurjão</h1>
-            <p class="firm-subtitle">Advogados Associados</p>
             <div class="divider"></div>
             <p class="tagline">Selecione o sistema que deseja acessar para iniciar suas operações corporativas.</p>
         </header>
