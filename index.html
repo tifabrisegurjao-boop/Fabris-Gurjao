@@ -8,6 +8,12 @@
     <meta name="theme-color" content="#030712" />
     <meta name="description" content="Portal de Sistemas Jurídicos Integrados - Fabris & Gurjão Advogados" />
     <title>Portal de Sistemas - Fabris & Gurjão Advogados</title>
+    <script>
+        // Check if splash has been played in this session to prevent reload flash
+        if (sessionStorage.getItem('portalSplashPlayed')) {
+            document.documentElement.classList.add('splash-played');
+        }
+    </script>
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -298,14 +304,15 @@
             align-items: center;
             justify-content: center;
             z-index: 9999;
-            opacity: 0;
-            pointer-events: none;
+            opacity: 1;
+            pointer-events: auto;
             transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .video-overlay.active {
-            opacity: 1;
-            pointer-events: auto;
+        .splash-played .video-overlay {
+            display: none !important;
+            opacity: 0;
+            pointer-events: none;
         }
 
         .video-overlay video {
@@ -460,53 +467,110 @@
         <video id="transition-video" src="./intro.mp4" muted playsinline></video>
         <div id="video-fallback" class="transition-fallback" style="display: none;">
             <div class="transition-loader"></div>
-            <p style="font-family: 'Inter', sans-serif; font-size: 0.75rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold-light); font-weight: 600;">Carregando Nexus...</p>
+            <p style="font-family: 'Inter', sans-serif; font-size: 0.75rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold-light); font-weight: 600;">Carregando Portal...</p>
         </div>
+        <button id="skip-splash" style="
+            position: absolute;
+            bottom: 30px;
+            right: 30px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            color: #f9fafb;
+            padding: 8px 16px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            border-radius: 8px;
+            cursor: pointer;
+            z-index: 10000;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        ">Pular</button>
     </div>
 
     <script>
+        // Clear any registered service workers from this origin to prevent cache issues
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.getRegistrations().then(registrations => {
+                for (const registration of registrations) {
+                    registration.unregister().then(success => {
+                        if (success) console.log('Service Worker unregistered successfully.');
+                    });
+                }
+            }).catch(err => {
+                console.error('Error unregistering service worker:', err);
+            });
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
-            const cards = document.querySelectorAll('a.system-card');
             const overlay = document.getElementById('video-transition-overlay');
             const video = document.getElementById('transition-video');
             const fallback = document.getElementById('video-fallback');
+            const skipButton = document.getElementById('skip-splash');
 
-            // Force load video assets
+            const hasPlayed = sessionStorage.getItem('portalSplashPlayed');
+
+            function finishSplash() {
+                overlay.style.opacity = '0';
+                overlay.style.pointerEvents = 'none';
+                sessionStorage.setItem('portalSplashPlayed', 'true');
+                document.documentElement.classList.add('splash-played');
+                
+                try {
+                    video.pause();
+                } catch(e) {}
+
+                setTimeout(() => {
+                    overlay.style.display = 'none';
+                }, 800);
+            }
+
+            if (hasPlayed) {
+                overlay.style.display = 'none';
+                return;
+            }
+
             video.load();
 
-            cards.forEach(card => {
-                const href = card.getAttribute('href');
-                if (href && href.includes('nexus')) {
-                    card.addEventListener('click', (e) => {
-                        e.preventDefault();
-                        overlay.classList.add('active');
-                        
-                        // Show fallback spinner if video takes too long to load
-                        const fallbackTimeout = setTimeout(() => {
-                            fallback.style.display = 'flex';
-                        }, 1000);
+            const fallbackTimeout = setTimeout(() => {
+                if (fallback) fallback.style.display = 'flex';
+            }, 1500);
 
-                        // Safe redirect timeout in case the video gets stuck or crashes
-                        const maxTimeout = setTimeout(() => {
-                            window.location.href = href;
-                        }, 5500);
+            const safetyTimeout = setTimeout(() => {
+                finishSplash();
+            }, 6000);
 
-                        video.play()
-                            .then(() => {
-                                video.onended = () => {
-                                    clearTimeout(fallbackTimeout);
-                                    clearTimeout(maxTimeout);
-                                    window.location.href = href;
-                                };
-                            })
-                            .catch(err => {
-                                console.warn("Video play failed, redirecting directly:", err);
-                                clearTimeout(fallbackTimeout);
-                                clearTimeout(maxTimeout);
-                                window.location.href = href;
-                            });
-                    });
-                }
+            video.play()
+                .then(() => {
+                    clearTimeout(fallbackTimeout);
+                    if (fallback) fallback.style.display = 'none';
+                    
+                    video.onended = () => {
+                        clearTimeout(safetyTimeout);
+                        finishSplash();
+                    };
+                })
+                .catch(err => {
+                    console.warn("Video autoplay blocked or failed, skipping splash:", err);
+                    clearTimeout(fallbackTimeout);
+                    clearTimeout(safetyTimeout);
+                    finishSplash();
+                });
+
+            if (skipButton) {
+                skipButton.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    clearTimeout(fallbackTimeout);
+                    clearTimeout(safetyTimeout);
+                    finishSplash();
+                });
+            }
+
+            overlay.addEventListener('click', () => {
+                clearTimeout(fallbackTimeout);
+                clearTimeout(safetyTimeout);
+                finishSplash();
             });
         });
     </script>

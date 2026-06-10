@@ -14,6 +14,20 @@
 
 	
 
+	<script>
+		// Clear any registered service workers from this origin to prevent cache-related white screens
+		if ('serviceWorker' in navigator) {
+			navigator.serviceWorker.getRegistrations().then(registrations => {
+				for (const registration of registrations) {
+					registration.unregister().then(success => {
+						if (success) console.log('Service Worker unregistered successfully.');
+					});
+				}
+			}).catch(err => {
+				console.error('Error unregistering service worker:', err);
+			});
+		}
+	</script>
   <script type="module" crossorigin src="/Fabris-Gurjao/assets/financeiro-3af68f55.js"></script>
   <link rel="modulepreload" crossorigin href="/Fabris-Gurjao/assets/modulepreload-polyfill-3cfb730f.js">
   <link rel="stylesheet" href="/Fabris-Gurjao/assets/index-2ed9bccb.css">
