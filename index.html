@@ -97,83 +97,30 @@
 
         /* Header / Logo Section */
         .header-section {
-            margin-bottom: 40px;
+            margin-bottom: 50px;
             display: flex;
             flex-direction: column;
             align-items: center;
+            justify-content: center;
         }
 
-        .logo-wrapper {
-            margin-bottom: 28px;
-            position: relative;
-            display: inline-block;
-            background: linear-gradient(135deg, rgba(8, 22, 46, 0.7), rgba(3, 8, 19, 0.8));
-            border: 1px solid rgba(197, 160, 89, 0.25);
-            border-radius: 28px;
-            padding: 24px 44px;
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.05);
-            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-            user-select: none;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            -webkit-user-drag: none;
-        }
-
-        .logo-wrapper:hover {
-            transform: translateY(-4px) scale(1.01);
-            border-color: var(--gold-light);
-            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.7), 0 0 30px rgba(197, 160, 89, 0.15);
-        }
-
-        .firm-logo {
-            height: 110px;
-            width: auto;
-            filter: brightness(1.2) contrast(1.05) drop-shadow(0 4px 8px rgba(0, 0, 0, 0.5));
-            display: block;
-            user-select: none;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            -webkit-user-drag: none;
-            pointer-events: none;
-        }
-
-        .divider {
+        .brand-crest-wrapper {
+            margin: 0 auto;
             width: 120px;
-            height: 1px;
-            background: linear-gradient(to right, transparent, var(--gold-mid), transparent);
-            margin: 16px auto 28px auto;
-            position: relative;
-        }
-
-        .divider::after {
-            content: '';
-            position: absolute;
-            top: -2px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 6px;
-            height: 6px;
-            background-color: var(--gold-mid);
-            border-radius: 50%;
-            box-shadow: 0 0 8px var(--gold-light);
-        }
-
-        .tagline {
-            font-family: 'Playfair Display', Georgia, serif;
-            font-size: 1.25rem;
-            font-style: italic;
-            color: #f1f5f9; /* Slate 100 for high brightness/readability */
-            max-width: 660px;
-            line-height: 1.7;
-            font-weight: 400;
-            letter-spacing: 0.02em;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+            height: 132px;
+            color: var(--gold-mid);
             opacity: 0.95;
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            cursor: pointer;
+            filter: drop-shadow(0 0 15px rgba(197, 160, 89, 0.35));
         }
+
+        .brand-crest-wrapper:hover {
+            transform: scale(1.08);
+            color: var(--gold-light);
+            filter: drop-shadow(0 0 35px rgba(223, 192, 131, 0.65));
+        }
+
 
         /* Systems Selection Grid */
         .systems-grid {
@@ -234,40 +181,46 @@
         }
 
         .card-icon-wrapper {
-            width: 76px;
-            height: 76px;
-            border-radius: 22px;
-            background: rgba(197, 160, 89, 0.05);
-            border: 1px solid rgba(197, 160, 89, 0.15);
+            width: 100px;
+            height: 100px;
+            border-radius: 28px;
+            background: rgba(197, 160, 89, 0.03);
+            border: 1px solid rgba(197, 160, 89, 0.12);
             display: flex;
             justify-content: center;
             align-items: center;
-            margin-bottom: 28px;
+            margin-bottom: 24px;
             color: var(--gold-mid);
             transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
             position: relative;
         }
 
         .system-card:hover .card-icon-wrapper {
-            background: rgba(197, 160, 89, 0.15);
+            background: rgba(197, 160, 89, 0.08);
             color: var(--gold-light);
             transform: scale(1.08);
-            box-shadow: 0 0 20px rgba(197, 160, 89, 0.25);
-            border-color: var(--gold-light);
+            box-shadow: 0 0 25px rgba(197, 160, 89, 0.2);
+            border-color: rgba(197, 160, 89, 0.35);
         }
 
         .card-icon-wrapper svg {
-            width: 32px;
-            height: 32px;
+            width: 52px;
+            height: 52px;
+            transition: all 0.4s ease;
+        }
+
+        .system-card:hover .card-icon-wrapper svg {
+            transform: scale(1.05);
+            filter: drop-shadow(0 0 8px rgba(197, 160, 89, 0.4));
         }
 
         .card-title {
             font-family: 'Cinzel', serif;
-            font-size: 1.4rem;
+            font-size: 1.5rem;
             font-weight: 700;
-            margin-bottom: 14px;
+            margin-bottom: 28px;
             color: #ffffff;
-            letter-spacing: 0.04em;
+            letter-spacing: 0.06em;
             transition: color 0.3s ease;
         }
 
@@ -275,14 +228,6 @@
             color: var(--gold-light);
         }
 
-        .card-desc {
-            font-size: 0.9rem;
-            color: var(--text-muted);
-            line-height: 1.65;
-            margin-bottom: 36px;
-            flex-grow: 1;
-            font-weight: 300;
-        }
 
         .card-button {
             display: flex;
@@ -398,17 +343,12 @@
     <div class="portal-container">
         <!-- Logo/Header -->
         <header class="header-section">
-            <div class="logo-wrapper">
-                <img src="https://www.fabrisegurjao.adv.br/netpage/data/uploads/2019/12/logo-fabris-e-gurjao-491x325px.png" alt="Logo Fabris & Gurjão" class="firm-logo" />
-            </div>
             <!-- Dynamic Brand Crest SVG (Official scales of the firm) -->
-            <div class="brand-crest-wrapper" style="margin: 12px auto; width: 44px; height: 48px; color: var(--gold-mid); opacity: 0.85;">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 37.92 41.87" class="brand-crest" style="width: 100%; height: 100%; fill: currentColor; filter: drop-shadow(0 0 8px rgba(197, 160, 89, 0.35));">
+            <div class="brand-crest-wrapper">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 37.92 41.87" class="brand-crest" style="width: 100%; height: 100%; fill: currentColor; filter: drop-shadow(0 0 12px rgba(197, 160, 89, 0.4));">
                     <path id="Path_58" data-name="Path 58" d="M428.626,119.712l7.9-7.9,10.319,10.318-1.581,1.58-15.8,15.8,3.949,3.949-1.58,1.581-3.949-3.95-3.951,3.95-1.58-1.58,3.951-3.95-15.8-15.8-1.579-1.58,18.96-18.96,5.529,5.53-1.58,1.58-1.58,1.58-1.579-1.58,1.579-1.58-2.369-2.37-15.8,15.8,7.062,7.063,4.74-4.741-1.579-1.58,1.579-1.58,1.58,1.58,1.581,1.58-6.32,6.32,7.158,7.159,15.8-15.8-7.158-7.158-4.74,4.74,1.58,1.58-1.58,1.58-1.58-1.58Z" transform="translate(-408.924 -103.169)"></path>
                 </svg>
             </div>
-            <div class="divider"></div>
-            <p class="tagline">Selecione o portal corporativo para iniciar suas operações e gerenciar as atividades jurídicas do escritório.</p>
         </header>
 
         <!-- Selection Grid -->
@@ -416,15 +356,47 @@
             <!-- Nexus Card -->
             <a href="./nexus/" class="system-card">
                 <div class="card-icon-wrapper">
-                    <!-- Folder Icon -->
-                    <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12.75V12A2.25 2.25 0 014.5 9.75h15A2.25 2.25 0 0121.75 12v.75m-19.5 0A2.25 2.25 0 002.25 15v4.5a2.25 2.25 0 002.25 2.25h15a2.25 2.25 0 002.25-2.25V15a2.25 2.25 0 00-2.25-2.25m-19.5 0h19.5M3.75 9.75V5.625c0-.621.504-1.125 1.125-1.125h9.75c.621 0 1.125.504 1.125 1.125V9.75M9 5.25h6"></path>
+                    <!-- Custom SVG Matrix Cube -->
+                    <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <linearGradient id="gold-grad-matrix" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#dfc083" />
+                                <stop offset="50%" stop-color="#c5a059" />
+                                <stop offset="100%" stop-color="#9e7f44" />
+                            </linearGradient>
+                        </defs>
+                        <!-- Isometric Cube Facets -->
+                        <!-- Top Face Triangles -->
+                        <polygon points="50,15 80,32.5 50,32.5" stroke="url(#gold-grad-matrix)" stroke-width="1.2" fill="rgba(8, 22, 46, 0.4)" stroke-linejoin="round" />
+                        <polygon points="80,32.5 50,50 50,32.5" stroke="url(#gold-grad-matrix)" stroke-width="1.2" fill="rgba(8, 22, 46, 0.5)" stroke-linejoin="round" />
+                        <polygon points="50,50 20,32.5 50,32.5" stroke="url(#gold-grad-matrix)" stroke-width="1.2" fill="rgba(8, 22, 46, 0.4)" stroke-linejoin="round" />
+                        <polygon points="20,32.5 50,15 50,32.5" stroke="url(#gold-grad-matrix)" stroke-width="1.2" fill="rgba(8, 22, 46, 0.5)" stroke-linejoin="round" />
+                        
+                        <!-- Left Face Triangles -->
+                        <polygon points="20,32.5 50,50 35,50" stroke="url(#gold-grad-matrix)" stroke-width="1.2" fill="rgba(8, 22, 46, 0.5)" stroke-linejoin="round" />
+                        <polygon points="50,50 50,85 35,50" stroke="url(#gold-grad-matrix)" stroke-width="1.2" fill="rgba(8, 22, 46, 0.4)" stroke-linejoin="round" />
+                        <polygon points="50,85 20,67.5 35,50" stroke="url(#gold-grad-matrix)" stroke-width="1.2" fill="rgba(8, 22, 46, 0.5)" stroke-linejoin="round" />
+                        <polygon points="20,67.5 20,32.5 35,50" stroke="url(#gold-grad-matrix)" stroke-width="1.2" fill="rgba(8, 22, 46, 0.4)" stroke-linejoin="round" />
+                        
+                        <!-- Right Face Triangles -->
+                        <polygon points="80,32.5 50,50 65,50" stroke="url(#gold-grad-matrix)" stroke-width="1.2" fill="rgba(8, 22, 46, 0.4)" stroke-linejoin="round" />
+                        <polygon points="50,50 50,85 65,50" stroke="url(#gold-grad-matrix)" stroke-width="1.2" fill="rgba(8, 22, 46, 0.5)" stroke-linejoin="round" />
+                        <polygon points="50,85 80,67.5 65,50" stroke="url(#gold-grad-matrix)" stroke-width="1.2" fill="rgba(8, 22, 46, 0.4)" stroke-linejoin="round" />
+                        <polygon points="80,67.5 80,32.5 65,50" stroke="url(#gold-grad-matrix)" stroke-width="1.2" fill="rgba(8, 22, 46, 0.5)" stroke-linejoin="round" />
+                        
+                        <!-- Glowing Node Vertices -->
+                        <circle cx="50" cy="15" r="2.5" fill="#dfc083" filter="drop-shadow(0 0 3px #dfc083)" />
+                        <circle cx="80" cy="32.5" r="2.5" fill="#dfc083" filter="drop-shadow(0 0 3px #dfc083)" />
+                        <circle cx="80" cy="67.5" r="2.5" fill="#dfc083" filter="drop-shadow(0 0 3px #dfc083)" />
+                        <circle cx="50" cy="85" r="2.5" fill="#dfc083" filter="drop-shadow(0 0 3px #dfc083)" />
+                        <circle cx="20" cy="67.5" r="2.5" fill="#dfc083" filter="drop-shadow(0 0 3px #dfc083)" />
+                        <circle cx="20" cy="32.5" r="2.5" fill="#dfc083" filter="drop-shadow(0 0 3px #dfc083)" />
+                        <circle cx="50" cy="50" r="3" fill="#dfc083" filter="drop-shadow(0 0 5px #dfc083)" />
                     </svg>
                 </div>
-                <h2 class="card-title">Gerador de Números e Pastas</h2>
-                <p class="card-desc">Nexus. Ferramenta corporativa para emissão e organização de códigos de processos, controle de clientes e gerenciamento estruturado de pastas.</p>
+                <h2 class="card-title">Números</h2>
                 <button class="card-button">
-                    <span>Acessar Nexus</span>
+                    <span>Acessar</span>
                     <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="width: 14px; height: 14px;">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"></path>
                     </svg>
@@ -434,15 +406,67 @@
             <!-- Financeiro Card -->
             <a href="./financeiro/" class="system-card">
                 <div class="card-icon-wrapper">
-                    <!-- Balance/Chart Icon -->
-                    <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 14.25v2.25m3-4.5v4.5m3-6.75v6.75m3-9v9M6 20.25h12A2.25 2.25 0 0020.25 18V6A2.25 2.25 0 0018 3.75H6A2.25 2.25 0 003.75 6v12A2.25 2.25 0 006 20.25z"></path>
+                    <!-- Witcher Wolf SVG Medallion -->
+                    <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <linearGradient id="gold-grad-wolf" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#dfc083" />
+                                <stop offset="50%" stop-color="#c5a059" />
+                                <stop offset="100%" stop-color="#9e7f44" />
+                            </linearGradient>
+                            <filter id="wolf-glow">
+                                <feGaussianBlur stdDeviation="1.5" result="coloredBlur"/>
+                                <feMerge>
+                                    <feMergeNode in="coloredBlur"/>
+                                    <feMergeNode in="SourceGraphic"/>
+                                </feMerge>
+                            </filter>
+                        </defs>
+                        
+                        <!-- Ears -->
+                        <polygon points="50,18 40,28 26,15" stroke="url(#gold-grad-wolf)" stroke-width="1.3" fill="rgba(3, 8, 19, 0.5)" stroke-linejoin="round" />
+                        <polygon points="26,15 20,32 40,28" stroke="url(#gold-grad-wolf)" stroke-width="1.3" fill="rgba(8, 22, 46, 0.4)" stroke-linejoin="round" />
+                        <polygon points="50,18 60,28 74,15" stroke="url(#gold-grad-wolf)" stroke-width="1.3" fill="rgba(3, 8, 19, 0.5)" stroke-linejoin="round" />
+                        <polygon points="74,15 80,32 60,28" stroke="url(#gold-grad-wolf)" stroke-width="1.3" fill="rgba(8, 22, 46, 0.4)" stroke-linejoin="round" />
+                        
+                        <!-- Head / Forehead -->
+                        <polygon points="50,18 40,28 50,48" stroke="url(#gold-grad-wolf)" stroke-width="1.3" fill="rgba(8, 22, 46, 0.5)" stroke-linejoin="round" />
+                        <polygon points="50,18 60,28 50,48" stroke="url(#gold-grad-wolf)" stroke-width="1.3" fill="rgba(8, 22, 46, 0.5)" stroke-linejoin="round" />
+                        
+                        <!-- Cheeks Outer -->
+                        <polygon points="20,32 14,48 36,52" stroke="url(#gold-grad-wolf)" stroke-width="1.3" fill="rgba(3, 8, 19, 0.4)" stroke-linejoin="round" />
+                        <polygon points="80,32 86,48 64,52" stroke="url(#gold-grad-wolf)" stroke-width="1.3" fill="rgba(3, 8, 19, 0.4)" stroke-linejoin="round" />
+                        <polygon points="40,28 20,32 36,52" stroke="url(#gold-grad-wolf)" stroke-width="1.3" fill="rgba(8, 22, 46, 0.4)" stroke-linejoin="round" />
+                        <polygon points="60,28 80,32 64,52" stroke="url(#gold-grad-wolf)" stroke-width="1.3" fill="rgba(8, 22, 46, 0.4)" stroke-linejoin="round" />
+                        
+                        <!-- Brow/Eye Facets -->
+                        <polygon points="40,28 36,52 50,48" stroke="url(#gold-grad-wolf)" stroke-width="1.3" fill="rgba(3, 8, 19, 0.6)" stroke-linejoin="round" />
+                        <polygon points="60,28 64,52 50,48" stroke="url(#gold-grad-wolf)" stroke-width="1.3" fill="rgba(3, 8, 19, 0.6)" stroke-linejoin="round" />
+                        
+                        <!-- Lower Jaw Outer -->
+                        <polygon points="14,48 24,70 36,52" stroke="url(#gold-grad-wolf)" stroke-width="1.3" fill="rgba(8, 22, 46, 0.4)" stroke-linejoin="round" />
+                        <polygon points="86,48 76,70 64,52" stroke="url(#gold-grad-wolf)" stroke-width="1.3" fill="rgba(8, 22, 46, 0.4)" stroke-linejoin="round" />
+                        
+                        <!-- Snout Bridge -->
+                        <polygon points="50,48 36,52 50,78" stroke="url(#gold-grad-wolf)" stroke-width="1.3" fill="rgba(8, 22, 46, 0.5)" stroke-linejoin="round" />
+                        <polygon points="50,48 64,52 50,78" stroke="url(#gold-grad-wolf)" stroke-width="1.3" fill="rgba(8, 22, 46, 0.5)" stroke-linejoin="round" />
+                        
+                        <!-- Snout Sides -->
+                        <polygon points="36,52 24,70 50,78" stroke="url(#gold-grad-wolf)" stroke-width="1.3" fill="rgba(3, 8, 19, 0.5)" stroke-linejoin="round" />
+                        <polygon points="64,52 76,70 50,78" stroke="url(#gold-grad-wolf)" stroke-width="1.3" fill="rgba(3, 8, 19, 0.5)" stroke-linejoin="round" />
+                        
+                        <!-- Chin -->
+                        <polygon points="24,70 50,92 50,78" stroke="url(#gold-grad-wolf)" stroke-width="1.3" fill="rgba(8, 22, 46, 0.6)" stroke-linejoin="round" />
+                        <polygon points="76,70 50,92 50,78" stroke="url(#gold-grad-wolf)" stroke-width="1.3" fill="rgba(8, 22, 46, 0.6)" stroke-linejoin="round" />
+                        
+                        <!-- Glowing Witcher Eyes -->
+                        <polygon points="32,47 38,48 35,51" fill="#dfc083" filter="url(#wolf-glow)" />
+                        <polygon points="68,47 62,48 65,51" fill="#dfc083" filter="url(#wolf-glow)" />
                     </svg>
                 </div>
-                <h2 class="card-title">Gestão Financeira</h2>
-                <p class="card-desc">Controle financeiro do escritório. Mapeamento de receitas, contratos de honorários, despesas recorrentes, juros de precatórios e relatórios gerenciais.</p>
+                <h2 class="card-title">Financeiro</h2>
                 <button class="card-button">
-                    <span>Acessar Financeiro</span>
+                    <span>Acessar</span>
                     <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="width: 14px; height: 14px;">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"></path>
                     </svg>
