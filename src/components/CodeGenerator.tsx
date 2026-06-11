@@ -1,8 +1,7 @@
-
 import React, { useState, useEffect } from 'react';
 import { ArrowLeft, Copy, Check } from 'lucide-react';
 import MatrixRain from './MatrixRain';
-import { getClients, generateContractCode, LAWYERS, Client } from '../lib/logic';
+import { searchClients, generateContractCode, LAWYERS, Client } from '../lib/logic';
 import { createLegalFolders } from '../lib/folderUtils';
 import { useToast } from './Toast';
 
@@ -13,6 +12,7 @@ interface CodeGeneratorProps {
 export default function CodeGenerator({ onBack }: CodeGeneratorProps) {
     const { showToast } = useToast();
     const [clients, setClients] = useState<Client[]>([]);
+    const [clientName, setClientName] = useState('');
     const [loading, setLoading] = useState(false);
     const [result, setResult] = useState<string | null>(null);
     const [copied, setCopied] = useState(false);
@@ -20,8 +20,16 @@ export default function CodeGenerator({ onBack }: CodeGeneratorProps) {
     const [matter, setMatter] = useState('');
 
     useEffect(() => {
-        getClients().then(setClients);
-    }, []);
+        const trimmed = clientName.trim();
+        if (trimmed.length < 2) {
+            setClients([]);
+            return;
+        }
+        const delayDebounce = setTimeout(() => {
+            searchClients(trimmed).then(setClients);
+        }, 300);
+        return () => clearTimeout(delayDebounce);
+    }, [clientName]);
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -29,10 +37,9 @@ export default function CodeGenerator({ onBack }: CodeGeneratorProps) {
         setResult(null);
 
         const formData = new FormData(e.currentTarget);
-        const clientName = formData.get('clientName') as string;
+        const nameTrimmed = clientName.trim();
         const lawyerId = formData.get('lawyerId') as string;
 
-        const nameTrimmed = clientName.trim();
         const matchedClient = clients.find(c => c.name.trim().toLowerCase() === nameTrimmed.toLowerCase());
         const finalClientName = matchedClient ? matchedClient.name : nameTrimmed;
 
@@ -66,7 +73,6 @@ export default function CodeGenerator({ onBack }: CodeGeneratorProps) {
             const res = await generateContractCode(finalClientName, lawyerId, matter);
             if (res && res.fullCode) {
                 setResult(res.fullCode);
-                getClients().then(setClients);
 
                 // 3. Criar as pastas
                 if (createFolder) {
@@ -130,6 +136,8 @@ export default function CodeGenerator({ onBack }: CodeGeneratorProps) {
                             <label className="text-[10px] uppercase tracking-widest text-cyan-400 font-bold ml-1">Cliente</label>
                             <input
                                 name="clientName"
+                                value={clientName}
+                                onChange={e => setClientName(e.target.value)}
                                 list="clients-list"
                                 className="w-full bg-slate-950/50 border border-cyan-500/30 rounded-lg p-3 text-cyan-100 placeholder:text-cyan-500/20 focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 transition-all"
                                 placeholder="Digite o nome do cliente..."

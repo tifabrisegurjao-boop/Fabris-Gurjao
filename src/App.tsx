@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { onAuthStateChanged, User } from 'firebase/auth';
 import { auth } from './lib/firebase';
+import { migrateLegacyData } from './lib/logic';
 import Login from './components/Login';
 import { Loader2 } from 'lucide-react';
 import Dashboard from './components/Dashboard';
@@ -26,6 +27,12 @@ function App() {
         });
         return () => unsubscribe();
     }, []);
+
+    useEffect(() => {
+        if (user) {
+            migrateLegacyData();
+        }
+    }, [user]);
 
     if (authLoading) {
         return (

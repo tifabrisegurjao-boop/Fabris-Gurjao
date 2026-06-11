@@ -17,20 +17,21 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-dark-1: #050b14;
-            --bg-dark-2: #0a1c3a; /* Exact Brand Navy */
-            --bg-dark-3: #030710;
-            --gold-light: #c5a059; /* Exact Brand Gold */
-            --gold-dark: #8e6f3b; /* Brand Dark Gold/Bronze */
-            --gold-glow: rgba(197, 160, 89, 0.15);
-            --text-light: #f9fafb;
+            --bg-dark-1: #030813;
+            --bg-dark-2: #08162e; /* Exact Brand Navy */
+            --bg-dark-3: #02050b;
+            --gold-light: #dfc083; /* Premium metallic light gold */
+            --gold-mid: #c5a059; /* Brand Gold */
+            --gold-dark: #9e7f44; /* Darker Gold */
+            --gold-glow: rgba(197, 160, 89, 0.08);
+            --text-light: #f3f4f6;
             --text-muted: #9ca3af;
-            --glass-bg: rgba(10, 28, 58, 0.55); /* Glass Brand Navy */
-            --glass-border: rgba(197, 160, 89, 0.15);
-            --glass-border-hover: rgba(197, 160, 89, 0.4);
+            --glass-bg: rgba(8, 22, 46, 0.65);
+            --glass-border: rgba(197, 160, 89, 0.18);
+            --glass-border-hover: rgba(197, 160, 89, 0.45);
         }
 
         * {
@@ -50,6 +51,10 @@
             align-items: center;
             overflow-x: hidden;
             position: relative;
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
         }
 
         /* Ambient Glow Behind Crest */
@@ -58,67 +63,75 @@
             top: 25%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 450px;
-            height: 450px;
+            width: 500px;
+            height: 500px;
             background: radial-gradient(circle, var(--gold-glow) 0%, transparent 70%);
             z-index: 0;
             pointer-events: none;
-            filter: blur(40px);
+            filter: blur(50px);
             animation: pulse-glow 8s ease-in-out infinite alternate;
         }
 
         @keyframes pulse-glow {
-            0% { opacity: 0.6; transform: translate(-50%, -50%) scale(0.9); }
-            100% { opacity: 1.0; transform: translate(-50%, -50%) scale(1.1); }
+            0% { opacity: 0.5; transform: translate(-50%, -50%) scale(0.95); }
+            100% { opacity: 0.9; transform: translate(-50%, -50%) scale(1.1); }
         }
 
         /* Container */
         .portal-container {
             width: 100%;
             max-width: 1100px;
-            padding: 40px 24px;
+            padding: 50px 24px;
             z-index: 10;
             display: flex;
             flex-direction: column;
             align-items: center;
             text-align: center;
-            animation: fade-in 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            animation: fade-in 1.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
         @keyframes fade-in {
-            from { opacity: 0; transform: translateY(20px); }
+            from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
         /* Header / Logo Section */
         .header-section {
-            margin-bottom: 48px;
+            margin-bottom: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         .logo-wrapper {
-            margin-bottom: 32px;
+            margin-bottom: 28px;
             position: relative;
             display: inline-block;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 24px;
-            padding: 20px 32px;
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
-            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease, border-color 0.4s ease;
+            background: linear-gradient(135deg, rgba(8, 22, 46, 0.7), rgba(3, 8, 19, 0.8));
+            border: 1px solid rgba(197, 160, 89, 0.25);
+            border-radius: 28px;
+            padding: 24px 44px;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            -webkit-user-drag: none;
         }
 
         .logo-wrapper:hover {
-            transform: translateY(-4px) scale(1.02);
-            border-color: rgba(197, 160, 89, 0.3);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5), 0 0 25px rgba(197, 160, 89, 0.15);
+            transform: translateY(-4px) scale(1.01);
+            border-color: var(--gold-light);
+            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.7), 0 0 30px rgba(197, 160, 89, 0.15);
         }
 
         .firm-logo {
-            height: 120px;
+            height: 110px;
             width: auto;
-            filter: brightness(1.25) contrast(1.1) drop-shadow(0 4px 8px rgba(0, 0, 0, 0.5));
+            filter: brightness(1.2) contrast(1.05) drop-shadow(0 4px 8px rgba(0, 0, 0, 0.5));
             display: block;
             user-select: none;
             -webkit-user-select: none;
@@ -129,22 +142,37 @@
         }
 
         .divider {
-            width: 80px;
-            height: 2px;
-            background: linear-gradient(to right, transparent, var(--gold-light), transparent);
-            margin: 0 auto 24px auto;
+            width: 120px;
+            height: 1px;
+            background: linear-gradient(to right, transparent, var(--gold-mid), transparent);
+            margin: 16px auto 28px auto;
+            position: relative;
+        }
+
+        .divider::after {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 6px;
+            height: 6px;
+            background-color: var(--gold-mid);
+            border-radius: 50%;
+            box-shadow: 0 0 8px var(--gold-light);
         }
 
         .tagline {
-            font-family: 'Inter', sans-serif;
-            font-size: 0.95rem;
-            color: #b3c0d4; /* Lighter silver-blue color for contrast and legibility */
-            max-width: 620px;
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 1.25rem;
+            font-style: italic;
+            color: #f1f5f9; /* Slate 100 for high brightness/readability */
+            max-width: 660px;
             line-height: 1.7;
-            font-weight: 300;
-            letter-spacing: 0.05em;
-            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
-            opacity: 0.9;
+            font-weight: 400;
+            letter-spacing: 0.02em;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+            opacity: 0.95;
         }
 
         /* Systems Selection Grid */
@@ -153,7 +181,7 @@
             grid-template-columns: 1fr;
             gap: 32px;
             width: 100%;
-            max-width: 900px;
+            max-width: 920px;
             margin-top: 20px;
         }
 
@@ -165,22 +193,22 @@
 
         /* Card Styles */
         .system-card {
-            background: var(--glass-bg);
+            background: linear-gradient(145deg, rgba(8, 22, 46, 0.45), rgba(3, 8, 19, 0.7));
             border: 1px solid var(--glass-border);
-            border-radius: 24px;
-            padding: 40px 32px;
+            border-radius: 28px;
+            padding: 48px 36px;
             text-decoration: none;
             color: inherit;
             display: flex;
             flex-direction: column;
             align-items: center;
             text-align: center;
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
             position: relative;
             overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.02);
         }
 
         .system-card::before {
@@ -190,15 +218,15 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: radial-gradient(circle at top right, rgba(245, 158, 11, 0.08), transparent 60%);
+            background: radial-gradient(circle at top right, rgba(223, 192, 131, 0.05), transparent 60%);
             opacity: 0;
-            transition: opacity 0.4s ease;
+            transition: opacity 0.5s ease;
         }
 
         .system-card:hover {
             transform: translateY(-8px);
             border-color: var(--glass-border-hover);
-            box-shadow: 0 20px 40px rgba(245, 158, 11, 0.08), 0 1px 20px rgba(245, 158, 11, 0.1);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6), 0 0 30px rgba(197, 160, 89, 0.1);
         }
 
         .system-card:hover::before {
@@ -206,23 +234,26 @@
         }
 
         .card-icon-wrapper {
-            width: 72px;
-            height: 72px;
-            border-radius: 20px;
-            background: rgba(245, 158, 11, 0.07);
-            border: 1px solid rgba(245, 158, 11, 0.15);
+            width: 76px;
+            height: 76px;
+            border-radius: 22px;
+            background: rgba(197, 160, 89, 0.05);
+            border: 1px solid rgba(197, 160, 89, 0.15);
             display: flex;
             justify-content: center;
             align-items: center;
-            margin-bottom: 24px;
-            color: var(--gold-light);
-            transition: all 0.4s ease;
+            margin-bottom: 28px;
+            color: var(--gold-mid);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
         }
 
         .system-card:hover .card-icon-wrapper {
-            background: rgba(245, 158, 11, 0.15);
+            background: rgba(197, 160, 89, 0.15);
+            color: var(--gold-light);
             transform: scale(1.08);
-            box-shadow: 0 0 15px rgba(245, 158, 11, 0.2);
+            box-shadow: 0 0 20px rgba(197, 160, 89, 0.25);
+            border-color: var(--gold-light);
         }
 
         .card-icon-wrapper svg {
@@ -231,18 +262,24 @@
         }
 
         .card-title {
-            font-size: 1.35rem;
-            font-weight: 600;
-            margin-bottom: 12px;
+            font-family: 'Cinzel', serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 14px;
             color: #ffffff;
-            letter-spacing: 0.02em;
+            letter-spacing: 0.04em;
+            transition: color 0.3s ease;
+        }
+
+        .system-card:hover .card-title {
+            color: var(--gold-light);
         }
 
         .card-desc {
             font-size: 0.9rem;
             color: var(--text-muted);
-            line-height: 1.6;
-            margin-bottom: 32px;
+            line-height: 1.65;
+            margin-bottom: 36px;
             flex-grow: 1;
             font-weight: 300;
         }
@@ -250,24 +287,26 @@
         .card-button {
             display: flex;
             align-items: center;
-            gap: 8px;
-            padding: 12px 28px;
-            border-radius: 12px;
-            background: linear-gradient(135deg, var(--gold-dark) 0%, var(--gold-light) 100%);
-            color: #ffffff;
-            font-size: 0.85rem;
-            font-weight: 600;
+            gap: 10px;
+            padding: 14px 32px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, var(--gold-dark) 0%, var(--gold-mid) 100%);
+            color: #030813; /* Dark background color for high premium contrast */
+            font-family: 'Inter', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 0.1em;
+            letter-spacing: 0.12em;
             border: none;
             cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 12px rgba(180, 83, 9, 0.3);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 4px 20px rgba(197, 160, 89, 0.2);
         }
 
         .system-card:hover .card-button {
-            transform: scale(1.03);
-            box-shadow: 0 6px 18px rgba(245, 158, 11, 0.4);
+            transform: scale(1.05);
+            background: linear-gradient(135deg, var(--gold-mid) 0%, var(--gold-light) 100%);
+            box-shadow: 0 8px 25px rgba(197, 160, 89, 0.4);
         }
 
         /* Footer */
@@ -295,7 +334,7 @@
         .video-overlay {
             position: fixed;
             inset: 0;
-            background-color: #050511;
+            background-color: #030813;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -334,7 +373,7 @@
         .transition-loader {
             width: 50px;
             height: 50px;
-            border: 3px solid rgba(245, 158, 11, 0.1);
+            border: 3px solid rgba(197, 160, 89, 0.1);
             border-top: 3px solid var(--gold-light);
             border-radius: 50%;
             animation: spin 1s linear infinite;
@@ -362,8 +401,14 @@
             <div class="logo-wrapper">
                 <img src="https://www.fabrisegurjao.adv.br/netpage/data/uploads/2019/12/logo-fabris-e-gurjao-491x325px.png" alt="Logo Fabris & Gurjão" class="firm-logo" />
             </div>
+            <!-- Dynamic Brand Crest SVG (Official scales of the firm) -->
+            <div class="brand-crest-wrapper" style="margin: 12px auto; width: 44px; height: 48px; color: var(--gold-mid); opacity: 0.85;">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 37.92 41.87" class="brand-crest" style="width: 100%; height: 100%; fill: currentColor; filter: drop-shadow(0 0 8px rgba(197, 160, 89, 0.35));">
+                    <path id="Path_58" data-name="Path 58" d="M428.626,119.712l7.9-7.9,10.319,10.318-1.581,1.58-15.8,15.8,3.949,3.949-1.58,1.581-3.949-3.95-3.951,3.95-1.58-1.58,3.951-3.95-15.8-15.8-1.579-1.58,18.96-18.96,5.529,5.53-1.58,1.58-1.58,1.58-1.579-1.58,1.579-1.58-2.369-2.37-15.8,15.8,7.062,7.063,4.74-4.741-1.579-1.58,1.579-1.58,1.58,1.58,1.581,1.58-6.32,6.32,7.158,7.159,15.8-15.8-7.158-7.158-4.74,4.74,1.58,1.58-1.58,1.58-1.58-1.58Z" transform="translate(-408.924 -103.169)"></path>
+                </svg>
+            </div>
             <div class="divider"></div>
-            <p class="tagline">Selecione o sistema que deseja acessar para iniciar suas operações corporativas.</p>
+            <p class="tagline">Selecione o portal corporativo para iniciar suas operações e gerenciar as atividades jurídicas do escritório.</p>
         </header>
 
         <!-- Selection Grid -->
@@ -413,7 +458,8 @@
 
     <!-- Video Transition Overlay -->
     <div id="video-transition-overlay" class="video-overlay">
-        <video id="transition-video" src="./intro.mp4" muted playsinline></video>
+        <!-- Servindo o vídeo intro.mp4 a partir da raiz (public/intro.mp4) de forma absoluta -->
+        <video id="transition-video" src="/intro.mp4" muted playsinline></video>
         <div id="video-fallback" class="transition-fallback" style="display: none;">
             <div class="transition-loader"></div>
             <p style="font-family: 'Inter', sans-serif; font-size: 0.75rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold-light); font-weight: 600;">Carregando Portal...</p>

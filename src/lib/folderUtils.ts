@@ -48,11 +48,17 @@ export async function createLegalFolders(
             const caseDirHandle = await clientDirHandle.getDirectoryHandle(caseFolderName, { create: true });
 
             // Create Subfolders
+            const dirCache: Record<string, any> = { '': caseDirHandle };
             for (const subPath of SUBFOLDERS) {
                 const parts = subPath.split('/');
-                let currentDir = caseDirHandle;
+                let currentPath = '';
                 for (const part of parts) {
-                    currentDir = await currentDir.getDirectoryHandle(part, { create: true });
+                    const parentPath = currentPath;
+                    currentPath = currentPath ? `${currentPath}/${part}` : part;
+                    if (!dirCache[currentPath]) {
+                        const parentHandle = dirCache[parentPath];
+                        dirCache[currentPath] = await parentHandle.getDirectoryHandle(part, { create: true });
+                    }
                 }
             }
             return { success: true, message: `Sucesso!\nCliente: ${clientFolderName}\nCaso #${cleanCaseId}: ${caseFolderName}` };

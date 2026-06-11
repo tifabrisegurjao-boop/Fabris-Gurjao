@@ -1,12 +1,12 @@
-
 import { db } from './firebase';
-import { collection, addDoc, getDocs, query, where, orderBy, limit, startAfter, deleteDoc, doc, updateDoc, getCountFromServer } from 'firebase/firestore';
+import { collection, addDoc, getDocs, query, where, orderBy, limit, startAfter, deleteDoc, doc, updateDoc, getCountFromServer, writeBatch } from 'firebase/firestore';
 
 // ─── Types ───────────────────────────────────────────────────────────────────────
 export type Client = {
     id: string;
     name: string;
     code: string;
+    nameLower?: string;
 };
 
 export type Contract = {
@@ -20,6 +20,7 @@ export type Contract = {
     lawyerId: string;
     matter: string;
     createdAt: string;
+    clientNameLower?: string;
 };
 
 // ─── Constants ───────────────────────────────────────────────────────────────────
@@ -35,6 +36,71 @@ export const LAWYERS = [
     { id: '09', name: 'Externo' },
 ];
 
+// ─── Database Migrations ────────────────────────────────────────────────────────
+export async function migrateLegacyData(): Promise<void> {
+    try {
+        const migratedFlag = localStorage.getItem('nexus_legacy_migrated');
+        if (migratedFlag === 'true') return;
+
+        console.log('Iniciando migração de dados legados no Firestore...');
+
+        // 1. Migrar Clientes (adicionar nameLower se faltar)
+        const clientsRef = collection(db, 'clients');
+        const clientsSnap = await getDocs(clientsRef);
+        let clientBatch = writeBatch(db);
+        let clientUpdates = 0;
+        let batchCounter = 0;
+
+        for (const docSnap of clientsSnap.docs) {
+            const data = docSnap.data();
+            if (!data.nameLower && data.name) {
+                clientBatch.update(docSnap.ref, { nameLower: data.name.trim().toLowerCase() });
+                clientUpdates++;
+                batchCounter++;
+
+                if (batchCounter >= 450) {
+                    await clientBatch.commit();
+                    clientBatch = writeBatch(db);
+                    batchCounter = 0;
+                }
+            }
+        }
+        if (batchCounter > 0) {
+            await clientBatch.commit();
+        }
+
+        // 2. Migrar Casos (adicionar clientNameLower se faltar)
+        const casesRef = collection(db, 'cases');
+        const casesSnap = await getDocs(casesRef);
+        let caseBatch = writeBatch(db);
+        let caseUpdates = 0;
+        batchCounter = 0;
+
+        for (const docSnap of casesSnap.docs) {
+            const data = docSnap.data();
+            if (!data.clientNameLower && data.clientName) {
+                caseBatch.update(docSnap.ref, { clientNameLower: data.clientName.trim().toLowerCase() });
+                caseUpdates++;
+                batchCounter++;
+
+                if (batchCounter >= 450) {
+                    await caseBatch.commit();
+                    caseBatch = writeBatch(db);
+                    batchCounter = 0;
+                }
+            }
+        }
+        if (batchCounter > 0) {
+            await caseBatch.commit();
+        }
+
+        console.log(`Migração concluída: ${clientUpdates} clientes e ${caseUpdates} casos atualizados.`);
+        localStorage.setItem('nexus_legacy_migrated', 'true');
+    } catch (e) {
+        console.error('Erro durante migração legada:', e);
+    }
+}
+
 // ─── Clients ─────────────────────────────────────────────────────────────────────
 export async function getClients(): Promise<Client[]> {
     try {
@@ -42,6 +108,25 @@ export async function getClients(): Promise<Client[]> {
         return snapshot.docs.map(d => ({ id: d.id, ...d.data() } as Client));
     } catch (error) {
         console.error('Erro ao buscar clientes:', error);
+        return [];
+    }
+}
+
+export async function searchClients(term: string): Promise<Client[]> {
+    if (!term.trim()) return [];
+    try {
+        const lower = term.trim().toLowerCase();
+        const clientsRef = collection(db, 'clients');
+        const q = query(
+            clientsRef,
+            where('nameLower', '>=', lower),
+            where('nameLower', '<=', lower + '\uf8ff'),
+            limit(10)
+        );
+        const snapshot = await getDocs(q);
+        return snapshot.docs.map(d => ({ id: d.id, ...d.data() } as Client));
+    } catch (error) {
+        console.error('Erro ao buscar clientes por prefixo:', error);
         return [];
     }
 }
@@ -75,22 +160,15 @@ export async function generateContractCode(clientName: string, lawyerId: string,
 
     let clientDoc = null;
     
-    // 1. Tenta buscar por nameLower (otimizado)
+    // 1. Tenta buscar por nameLower (otimizado com índice)
     const clientSnapLower = await getDocs(query(clientsRef, where('nameLower', '==', nameLower)));
     if (!clientSnapLower.empty) {
         clientDoc = clientSnapLower.docs[0];
     } else {
-        // 2. Tenta buscar por name exato (caso de registros legados)
+        // 2. Tenta buscar por name exato (caso a migração não tenha rodado)
         const clientSnapExact = await getDocs(query(clientsRef, where('name', '==', nameTrimmed)));
         if (!clientSnapExact.empty) {
             clientDoc = clientSnapExact.docs[0];
-        } else {
-            // 3. Fallback: busca local em todos para evitar duplicidades caso a caixa do nome legado seja diferente
-            const allClientsSnap = await getDocs(clientsRef);
-            clientDoc = allClientsSnap.docs.find(d => {
-                const name = d.data().name;
-                return name && name.trim().toLowerCase() === nameLower;
-            }) ?? null;
         }
     }
 
@@ -148,6 +226,7 @@ export async function generateContractCode(clientName: string, lawyerId: string,
         lawyerId: lawyerId.padStart(2, '0'),
         clientId,
         clientName: nameTrimmed,
+        clientNameLower: nameLower,
         matter: matter.toUpperCase(),
         createdAt: new Date().toISOString(),
     });
@@ -171,22 +250,37 @@ export async function searchContracts(
     try {
         const casesRef = collection(db, 'cases');
 
-        // If there's a search term, fetch all and filter client-side
-        // (Firestore doesn't support full-text search natively)
         if (term) {
-            const q = query(casesRef, orderBy('createdAt', 'desc'));
-            const snapshot = await getDocs(q);
-            const lower = term.toLowerCase();
-            const filtered = snapshot.docs
-                .map(d => ({ id: d.id, ...d.data() } as Contract))
-                .filter(c =>
-                    c.clientName.toLowerCase().includes(lower) ||
-                    c.fullCode?.toLowerCase().includes(lower)
+            const lower = term.trim().toLowerCase();
+            const isCodeSearch = /\d/.test(lower);
+            
+            let q;
+            if (isCodeSearch) {
+                // Busca por prefixo de fullCode
+                q = query(
+                    casesRef,
+                    where('fullCode', '>=', lower),
+                    where('fullCode', '<=', lower + '\uf8ff'),
+                    orderBy('fullCode'),
+                    limit(PAGE_SIZE)
                 );
-            return { contracts: filtered, lastDoc: null, hasMore: false };
+            } else {
+                // Busca por prefixo de clientNameLower
+                q = query(
+                    casesRef,
+                    where('clientNameLower', '>=', lower),
+                    where('clientNameLower', '<=', lower + '\uf8ff'),
+                    orderBy('clientNameLower'),
+                    limit(PAGE_SIZE)
+                );
+            }
+            
+            const snapshot = await getDocs(q);
+            const contracts = snapshot.docs.map(d => ({ id: d.id, ...d.data() } as Contract));
+            return { contracts, lastDoc: null, hasMore: false };
         }
 
-        // No search term: use cursor-based pagination
+        // Sem termo de busca: usar paginação baseada em cursor
         const constraints: any[] = [orderBy('createdAt', 'desc'), limit(PAGE_SIZE + 1)];
         if (cursor) constraints.push(startAfter(cursor));
 

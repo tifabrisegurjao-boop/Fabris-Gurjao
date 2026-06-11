@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { ArrowLeft, Loader2, FolderPlus } from 'lucide-react';
-import { generateContractCode, LAWYERS, getClients, Client } from '../lib/logic';
+import { generateContractCode, LAWYERS, searchClients, Client } from '../lib/logic';
 import { createLegalFolders } from '../lib/folderUtils';
 import { useToast } from './Toast';
 
@@ -17,8 +17,16 @@ export default function FolderGenerator({ onBack }: FolderGeneratorProps) {
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
-        getClients().then(setClients);
-    }, []);
+        const trimmed = clientName.trim();
+        if (trimmed.length < 2) {
+            setClients([]);
+            return;
+        }
+        const delayDebounce = setTimeout(() => {
+            searchClients(trimmed).then(setClients);
+        }, 300);
+        return () => clearTimeout(delayDebounce);
+    }, [clientName]);
 
     const handleGenerate = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -63,9 +71,6 @@ export default function FolderGenerator({ onBack }: FolderGeneratorProps) {
             );
 
             showToast(result.message, 'success');
-            
-            // Recarregar lista de clientes para incluir novos cadastros
-            getClients().then(setClients);
         } catch (err: any) {
             console.error(err);
             showToast(`Erro: ${err.message || 'Falha desconhecida. Verifique a conexão.'}`, 'error');
